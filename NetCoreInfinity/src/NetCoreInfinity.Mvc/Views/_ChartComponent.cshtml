@@ -1,0 +1,91 @@
+﻿@using NetCoreInfinity.Mvc.Models
+@model HighChartsLine
+
+<script src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+        crossorigin="anonymous"></script>
+
+<div id="@Model.ChartId"></div>
+
+<script type="text/javascript">
+
+    var _title = '@Model.Title';
+    var _subTitle = '@Model.SubTitle';
+    var _categories = @Html.Raw(Json.Serialize(Model.Categories));
+    var _values =  @Html.Raw(Json.Serialize(Model.Values));
+    var _chartId = '@Model.ChartId';
+    var _lineTitle = '@Model.LineTitle';
+    var _adress = '@Model.DataAdress';
+
+    function updateChart(param) {
+        return 'merhaba burak parametre ' + param;
+    }
+
+    Highcharts.chart(_chartId, {
+        chart: {
+            zoomType: 'xy'
+        },
+        title: {
+            text: _title
+        },
+        subtitle: {
+            text: _subTitle
+        },
+        xAxis: [{
+            categories: _categories,
+            crosshair: true
+        }],
+        yAxis: [{ // Primary yAxis
+            labels: {
+                format: '{value}',
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            },
+            title: {
+                text: _lineTitle,
+                style: {
+                    color: Highcharts.getOptions().colors[1]
+                }
+            }
+        }, { // Secondary yAxis
+            title: {
+                text: '',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            labels: {
+                format: '{value} mm',
+                style: {
+                    color: Highcharts.getOptions().colors[0]
+                }
+            },
+            opposite: true
+        }],
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'left',
+            x: 120,
+            verticalAlign: 'top',
+            y: 100,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        },
+        series: [{
+            name: _lineTitle,
+            type: 'column',
+            yAxis: 0,
+            data: _values,
+            tooltip: {
+                valueSuffix: ''
+            }
+
+        }]
+    });
+
+
+</script>

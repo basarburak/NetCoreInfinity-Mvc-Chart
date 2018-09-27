@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model ErrorViewModel
+
+
+<netcoreinfinity-chart-script></netcoreinfinity-chart-script>
+
+<netcoreinfinity-chart title="Basvuru Sayisi" sub-title="Basvuru Sayisi Detay"
+                       line-title="Basvuru Sayisi" chart-id="aylikBasvuru" mock-data="true" data="@Url.Action("GetChartData","Home")">
+</netcoreinfinity-chart>
